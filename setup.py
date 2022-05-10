@@ -12,13 +12,13 @@ def read(fname):
 
 setup(
     name='flimtools',
-    version='0.0.1',
+    version='0.0.2',
     author='Jay Unruh',
     description='A set of tools to do linear unmixing and phasor analysis on FLIM data.',
     url='https://github.com/jayunruh/FLIM_tools',
     license='GNU GPLv2',
     packages=find_packages(),
     python_requires='>=3.6',
-    install_requires=["numpy","numba","matplotlib"],
-    py_modules=['linleastsquares','flimtools'],
+    install_requires=["numpy","numba","matplotlib","napari","magicgui"],
+    py_modules=['linleastsquares','flimtools','napariflim'],
 )

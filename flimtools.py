@@ -3,12 +3,13 @@
 copyright Jay Unruh, Stowers Institute, 2022
 License: GPL_v2: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 collection of functions to work with FLIM data
-""" 
+"""
 
 import numpy as np
 import scipy.ndimage as ndi
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import matplotlib.patches as patches
 import linleastsquares
 
 def readBin(fpath):
@@ -192,7 +193,7 @@ def tripfractions(refpos,lims=[0,1,0,1],nbins=64):
     temp2=np.matmul(minv,temp).T.reshape((nbins,nbins,3))
     fractions=np.moveaxis(temp2,2,0)
     return fractions
-        
+
 #here's our simulation code for random fractions of the components
 def sim_fractions(refpos,nsims=1000000,lims=[0,1,0,1],nbins=64):
     #get a bunch of random numbers
@@ -217,3 +218,23 @@ def sim_fractions(refpos,nsims=1000000,lims=[0,1,0,1],nbins=64):
     fracflat=(fracflat.T/fracflat.sum(axis=1).clip(min=1)).T
     #and return the unflattened
     return np.moveaxis(fracflat.reshape((nbins,nbins,len(refpos))),2,0)
+
+#below are some convenience plotting functions
+#this one shows the histogram
+def showHist(gshist,gbins,sbins,lims=[0,1,0,1],points=None,ptsizes=None):
+    fig=plt.figure(figsize=(4,4))
+    plt.gca().pcolormesh(gbins,sbins,gshist.T,cmap=getNiceCmap())
+    plt.gca().add_patch(patches.Arc((0.5,0.0),1.0,1.0,theta1=0.0,theta2=180.0))
+    if points is not None:
+        if ptsizes is None:
+            ptsizes=np.full(len(points),0.1)
+        for i in range(len(points)):
+            ts=ptsizes[i]
+            tc=points[i]-0.5*ts
+            plt.gca().add_patch(patches.Rectangle(tc,ts,ts,ec='red',fc='None'))
+    plt.xlim(lims[0],lims[1])
+    plt.ylim(lims[2],lims[3])
+    plt.xlabel('G')
+    plt.ylabel('S')
+    plt.show()
+    return fig
