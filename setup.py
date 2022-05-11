@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name='flimtools',
-    version='0.0.2',
+    version='0.0.4',
     author='Jay Unruh',
     description='A set of tools to do linear unmixing and phasor analysis on FLIM data.',
     url='https://github.com/jayunruh/FLIM_tools',

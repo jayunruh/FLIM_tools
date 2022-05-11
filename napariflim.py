@@ -50,9 +50,6 @@ class PhasorWidget(NapariMPLWidget):
         self.axes.set_xlabel('G')
         self.axes.set_ylabel('S')
         self.canvas.draw()
-        
-    def clear(self) -> None:
-        self.axes.clear()
 
 def startNapariWidget(gimg,simg,timg,viewer=None,smsigma=2,thresh=3,lims=[0,1,0,1],npts=2,points=None,ptsizes=None):
     '''
@@ -97,7 +94,7 @@ def startNapariWidget(gimg,simg,timg,viewer=None,smsigma=2,thresh=3,lims=[0,1,0,
         pw.pts=np.array([[pt1x,pt1y],[pt2x,pt2y]])
         pw.ptsizes=[pt1s,pt2s]
         pw.mult=mult
-        pw.clear()
+        #pw.clear()
         pw.draw()
         mask1=flimtools.getRectHistMask([pt1x,pt1y,pt1s,pt1s],timg,gthresh,sthresh,xthreshcoords,ythreshcoords)
         mask2=flimtools.getRectHistMask([pt2x,pt2y,pt2s,pt2s],timg,gthresh,sthresh,xthreshcoords,ythreshcoords)
